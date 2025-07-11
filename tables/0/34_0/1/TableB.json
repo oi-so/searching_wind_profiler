@@ -1,0 +1,16 @@
+{
+    "008021": ["TIME SIGNIFICANCE", "CODE TABLE", 0, 0, 5, "CODE TABLE", 0, 2],
+    "004001": ["YEAR", "YEAR", 0, 0, 12, "YEAR", 0, 4],
+    "004002": ["MONTH", "MONTH", 0, 0, 4, "MONTH", 0, 2],
+    "004003": ["DAY", "DAY", 0, 0, 6, "DAY", 0, 2],
+    "004004": ["HOUR", "HOUR", 0, 0, 5, "HOUR", 0, 2],
+    "004005": ["MINUTE", "MINUTE", 0, 0, 6, "MINUTE", 0, 2],
+    "001210": ["RIVER CODE", "Numeric", 0, 80000000, 24, "Numeric", 0, 8],
+    "005240": ["INDEX OF LATITUDE FOR 1ST ORDER MESH", "Numeric", 0, 0, 7, "Numeric", 0, 4],
+    "006240": ["INDEX OF LONGITUDE FOR 1ST ORDER MESH", "Numeric", 0, 0, 7, "Numeric", 0, 4],
+    "005241": ["INDEX OF LATITUDE FOR 2ND ORDER MESH", "Numeric", 0, 0, 4, "Numeric", 0, 2],
+    "006241": ["INDEX OF LONGITUDE FOR 2ND ORDER MESH", "Numeric", 0, 0, 4, "Numeric", 0, 2],
+    "005242": ["INDEX OF LATITUDE FOR 3RD ORDER MESH", "Numeric", 0, 0, 4, "Numeric", 0, 2],
+    "006242": ["INDEX OF LONGITUDE FOR 3RD ORDER MESH", "Numeric", 0, 0, 4, "Numeric", 0, 2],
+    "013212": ["RUNOFF INDEX (HIGH ACCURACY)", "Numeric", 1, 0, 12, "Numeric", 0, 4]
+}

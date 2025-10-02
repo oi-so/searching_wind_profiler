@@ -2,7 +2,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import json
-import subprocess
+import os
 
 class bufrToJson:
 
@@ -144,7 +144,7 @@ class bufrToJson:
 				output.append(output_child)
 				output_child = []
 			json_file_name = "-".join(list(map(str, output[0][0][:4])))
-			subprocess.run(["mkdir", f"final_work_dir/converted_jsons/{y}_{m:02}_{d:02}_winprof/"])
+			os.makedirs(f"final_work_dir/converted_jsons/{y}_{m:02}_{d:02}_winprof/", exist_ok=True)
 			with open(f"final_work_dir/converted_jsons/{y}_{m:02}_{d:02}_winprof/"+json_file_name+".json", "w", encoding="utf-8") as f:
 				json.dump(output, f, ensure_ascii=False, indent=4)
 

@@ -9,11 +9,11 @@ from convert_bufr_to_json import main as convert_BUFR
 import requests
 from bs4 import BeautifulSoup
 import os
-import subprocess
 from glob import glob
 import tarfile
 import json
 from datetime import datetime, timedelta
+import shutil
 
 print("[ ウィンドプロファイラ グラフ作成プログラム ]")
 print("作成したい年月日を入力してください。\n")
@@ -46,7 +46,8 @@ def download_and_convert_bufr():
             print(f"Saved to {local_path+i.get('href', '')}")
 
     bufr_tar_files = glob("final_work_dir/bufr_tar_files/*.tar.gz")
-    subprocess.run(["mkdir", f"final_work_dir/bufr_send_files/{year_to_import}_{month_to_import:02}_{day_to_import:02}_winprof/"])
+    send_dir = f"final_work_dir/bufr_send_files/{year_to_import}_{month_to_import:02}_{day_to_import:02}_winprof/"
+    os.makedirs(send_dir, exist_ok=True)
     print("ダウンロードは正常に完了しました。")
     print("圧縮BUFRファイルを展開しています...")
 
@@ -56,8 +57,10 @@ def download_and_convert_bufr():
             IUPC44_tar_name = list(filter(lambda x: "IUPC44" in x, tar.getnames()))[0]
             tar.extract(IUPC44_tar_name, path=f"final_work_dir/bufr_send_files/{year_to_import}_{month_to_import:02}_{day_to_import:02}_winprof/")
 
-    subprocess.run(["rm", "-r", "./final_work_dir/bufr_tar_files/"])
-    subprocess.run(["mkdir", "./final_work_dir/bufr_tar_files/"])
+    tar_dir = os.path.join("final_work_dir", "bufr_tar_files")
+    if os.path.exists(tar_dir):
+        shutil.rmtree(tar_dir)
+    os.makedirs(tar_dir, exist_ok=True)
     print("展開は正常に完了しました。")
 
 
@@ -207,8 +210,8 @@ u_arr = np.array(u_clean).T
 v_arr = np.array(v_clean).T
 
 def signed_log(x):
-    # 0は np.nan、非ゼロは符号を維持してlog(abs(x))
-    return np.where(x == 0, 0, np.sign(x) * np.log10(np.abs(x)))
+    # 2で除算
+    return np.where(~np.isnan(x), x / 10, np.nan)
 
 w_arr = signed_log(w_arr)
 u_arr = signed_log(u_arr)
@@ -260,7 +263,9 @@ ax.set_title(f"{sta_name} Wind Profile", fontsize=18)
 ax.set_xticks(np.arange(n_time))
 ax.set_xticklabels([t.strftime('%H:%M') for t in time_index], rotation=45)
 
+
 plt.subplots_adjust(hspace=0.8, bottom=0.2)
+
 print("グラフの作成が完了しました。")
 plt.savefig("final_work_dir/win_prof_figs/"+output_filename, dpi=300, bbox_inches='tight')
 plt.show()
